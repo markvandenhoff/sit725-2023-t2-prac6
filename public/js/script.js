@@ -86,6 +86,22 @@ function getAllCats() {
     });
 }
 
+function deleteCat(cat) {
+    $.ajax({
+        url:'/api/cat',
+        type:'DELETE',
+        data:cat,
+        success: (result) => {
+            if (result.statusCode === 201) {
+                alert('cat deleted');
+                location.reload();
+            }
+        }
+    });
+}
+
+
+
 
 $(document).ready(function(){
     $('.materialboxed').materialbox();

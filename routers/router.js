@@ -11,7 +11,7 @@ router.get('/', (req,res)=>{
 });
 
 router.delete('/', (req,res)=>{
-    controller.getAllCats(req,res);
+    controller.deleteCat(req,res);
 });
 
 
