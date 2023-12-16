@@ -10,7 +10,7 @@ function getAllCats(callback) {
     collection.find({}).toArray(callback);
 }
 
-function deleteCat(callback) {
+function deleteCat(cat, callback) {
     collection.deleteOne(cat,callback);
 }
 
