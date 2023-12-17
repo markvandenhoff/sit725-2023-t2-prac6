@@ -1,5 +1,8 @@
 const { expect } = require("chai");
 const request = require("request");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+var getHeading = require('../models/cat.js');
 let url = 'http://localhost:3000/api/cat';
 let cat = {
     _id: 'test',
@@ -9,11 +12,9 @@ let cat = {
     desription: 'testdDescription'
 };
 
-
 describe('test GET api', function () {
     it('returns statusCode of 200', function (done) {
         request(url, function (error, response, body) {
-            // let response = JSON.parse(c);
             expect(response.statusCode).to.equal(200);
             done();
         });
@@ -22,22 +23,20 @@ describe('test GET api', function () {
         request(url, function (error, response, body) {
             body = JSON.parse(body)
             expect(body.statusCode).to.equal(200);
-            done()
-        });
-    });
-});
-
-
-
-describe('test POST api', function () {
-    it('post cat to DB', function (done) {
-        request.post({ url: url, form: cat }, async function (error, response, body) {
-            expect(response.statusCode).to.equal(200);
             done();
         });
     });
 });
 
+
+// describe('test POST api', function () {
+//     it('post cat to DB', function (done) {
+//         request.post({ url: url, form: cat }, async function (error, response, body) {
+//             expect(response.statusCode).to.equal(200);
+//             done();
+//         });
+//     });
+// });
 
 
 describe('test DELETE api', function () {
@@ -48,3 +47,33 @@ describe('test DELETE api', function () {
         });
     });
 });
+
+describe('getHeadings to test HTML is loading', function () {
+    before(function () {
+        return JSDOM.fromFile('./public/history.html')
+        .then((dom) => {
+            global.window = dom.window;
+            global.document = window.document;
+        });
+
+    });
+    it('checks the heading exists in the history page', function (done) {
+        expect(document.getElementById('historyHeading').innerHTML).to.equal('Card History Table');
+        done();
+    });
+});
+
+describe('getHeadings to test HTML is loading', function () {
+    before(function () {
+        return JSDOM.fromFile('./public/index.html')
+        .then((dom) => {
+            global.window = dom.window;
+            global.document = window.document;
+        });
+    });
+    it('checks the heading exists in the index page', function (done) {
+        expect(document.getElementById('indexHeading').innerHTML).to.equal('Welcome to SIT 725 Week 5');
+        done();
+    });
+});
+

@@ -14,4 +14,8 @@ function deleteCat(cat, callback) {
     collection.deleteOne(cat,callback);
 }
 
-module.exports = {postCat,getAllCats,deleteCat}
+function getHeading(theHeading) {
+    document.getElementById("h1").innerHTML = theHeading;
+}
+
+module.exports = {postCat,getAllCats,deleteCat, getHeading}

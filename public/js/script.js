@@ -26,7 +26,7 @@ const addtoTable = (rows) => {
     html += '  crossorigin="anonymous">';
     html += '</head>';
     html += '<body><div class="container">';
-    html += '<table class="table">';
+    html += '<table class="table" id="table1">';
     html += '<thead class="thead-dark"><tr>';
     html += '<th>Title</th><th>Path</th><th>SubTitle</th><th>Description</th>';
     html += '<tr></thead><tbody>';
@@ -46,6 +46,7 @@ const addtoTable = (rows) => {
         html += '</div>';
         html += '</body></html>';
         $("#table-section").append(html)
+        console.log(html);
     };
   
 
@@ -99,9 +100,6 @@ function deleteCat(cat) {
         }
     });
 }
-
-
-
 
 $(document).ready(function(){
     $('.materialboxed').materialbox();
