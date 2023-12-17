@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const request = require("request");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-var getHeading = require('../models/cat.js');
 let url = 'http://localhost:3000/api/cat';
 let cat = {
     _id: 'test',
@@ -29,14 +28,14 @@ describe('test GET api', function () {
 });
 
 
-// describe('test POST api', function () {
-//     it('post cat to DB', function (done) {
-//         request.post({ url: url, form: cat }, async function (error, response, body) {
-//             expect(response.statusCode).to.equal(200);
-//             done();
-//         });
-//     });
-// });
+describe('test POST api', function () {
+    it('post cat to DB', function (done) {
+        request.post({ url: url, form: cat }, async function (error, response, body) {
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+});
 
 
 describe('test DELETE api', function () {
@@ -48,7 +47,21 @@ describe('test DELETE api', function () {
     });
 });
 
-describe('getHeadings to test HTML is loading', function () {
+describe('Test Index Page', function () {
+    before(function () {
+        return JSDOM.fromFile('./public/index.html')
+        .then((dom) => {
+            global.window = dom.window;
+            global.document = window.document;
+        });
+    });
+    it('checks the heading exists in the index page', function (done) {
+        expect(document.getElementById('indexHeading').innerHTML).to.equal('Welcome to SIT 725 Week 5');
+        done();
+    });
+});
+
+describe('Test History Page', function () {
     before(function () {
         return JSDOM.fromFile('./public/history.html')
         .then((dom) => {
@@ -59,20 +72,6 @@ describe('getHeadings to test HTML is loading', function () {
     });
     it('checks the heading exists in the history page', function (done) {
         expect(document.getElementById('historyHeading').innerHTML).to.equal('Card History Table');
-        done();
-    });
-});
-
-describe('getHeadings to test HTML is loading', function () {
-    before(function () {
-        return JSDOM.fromFile('./public/index.html')
-        .then((dom) => {
-            global.window = dom.window;
-            global.document = window.document;
-        });
-    });
-    it('checks the heading exists in the index page', function (done) {
-        expect(document.getElementById('indexHeading').innerHTML).to.equal('Welcome to SIT 725 Week 5');
         done();
     });
 });
